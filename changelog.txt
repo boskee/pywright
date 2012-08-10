@@ -835,7 +835,7 @@ PyWright Beta 10.91
     Fixes:
      - Saves the current frame of fg animations - fixes a bug where loading a game would make
             all of the hold it and objection animations show again (only fixes new saves)
-     - Supports ä ö ü and other international characters through the PWinternational font
+     - Supports Ã¤ Ã¶ Ã¼ and other international characters through the PWinternational font
             (thanks to AAO for this)  You'll have to wait for b11 for more control over fonts.
      - Don't crash when trying to load and no save exists!
      - Restored games that use the looping music feature will no longer get stuck looping the intro
