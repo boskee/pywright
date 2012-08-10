@@ -472,11 +472,11 @@ class Script(gui.widget):
         state = "none"
         for i,line in enumerate(self.scriptlines):
             line = line.lstrip()
-            if line.startswith("label ") or line.startswith("result "):
+            if line.startswith(("label ", "result ")):
                 rn = line.split(" ",1)[1].strip().replace(" ","_")
                 if rn:
                     self.labels.append([rn,i])
-            if line.startswith("list ") or line.startswith("statement "):
+            if line.startswith(("list ", "statement ")):
                 rn = line.split(" ",1)[1].strip().replace(" ","_")
                 if rn:
                     self.labels.append([rn,i-1])
