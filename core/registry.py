@@ -1,6 +1,6 @@
-import os,zipfile,StringIO
+import os, zipfile, StringIO
 
-filepaths = ["data/art","data/music","data/sfx","movies"]
+filepaths = ("data/art", "data/music", "data/sfx", "movies")
 ignore = ".hg"
 priority = ["png","jpg","gif","bmp","mp3","ogg"]
 
@@ -13,7 +13,7 @@ class File:
         self.ext = ""
         if "." in self.filename:
             self.pathtag = self.path.rsplit(".",1)[0]
-            self.filetag,self.ext = self.filename.rsplit(".",1)
+            self.filetag, self.ext = self.filename.rsplit(".", 1)
         self.priority = 12
         if self.ext in priority:
             self.priority = priority.index(self.ext)
@@ -25,14 +25,14 @@ class File:
         return self.path
             
 def testfile():
-    a = File("../data/data/art/port/kristoph2/normal(talk).txt")
-    b = File("../data/data/art/port/kristoph2/normal(talk).png")
-    c = File("../data/data/art/port/kristoph12/normal(talk).jpg")
-    d = File("../data/data/art/port/kristoph2/normal(talk)")
-    assert a.path=="../data/data/art/port/kristoph2/normal(talk).txt"
-    assert b.path=="../data/data/art/port/kristoph2/normal(talk).png"
-    assert c.path=="../data/data/art/port/kristoph12/normal(talk).jpg"
-    assert d.path=="../data/data/art/port/kristoph2/normal(talk)"
+    a = File("../data/art/port/kristoph2/normal(talk).txt")
+    b = File("../data/art/port/kristoph2/normal(talk).png")
+    c = File("../data/art/port/kristoph12/normal(talk).jpg")
+    d = File("../data/art/port/kristoph2/normal(talk)")
+    assert a.path=="../data/art/port/kristoph2/normal(talk).txt"
+    assert b.path=="../data/art/port/kristoph2/normal(talk).png"
+    assert c.path=="../data/art/port/kristoph12/normal(talk).jpg"
+    assert d.path=="../data/art/port/kristoph2/normal(talk)"
     assert a.filetag==b.filetag==c.filetag==d.filetag
     assert a.pathtag==b.pathtag!=c.pathtag
     assert b.priority<c.priority,"bpri:%s cpri:%s"%(b.priority,c.priority)

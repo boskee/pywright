@@ -81,6 +81,7 @@ class WorkThread:
 class Resources:
     def __init__(self,rootpath,temppath):
         self.rootpath = rootpath
+        self.datapath = "data/"
         self.temppath = temppath
         self.bg = {}
         self.fg = {}
@@ -95,8 +96,8 @@ class Resources:
     def create_folders(self):
         if not os.path.exists(self.temppath):
             os.mkdir(self.temppath)
-        for pth in ["","data/art","data/art/fg","data/art/bg","data/art/ev","data/art/port","data/music","data/sfx"]:
-            pth = self.rootpath+"/"+pth
+        for pth in ["","art","art/fg","art/bg","art/ev","art/port","music","sfx"]:
+            pth = self.rootpath+"/"+self.datapath+pth
             if not os.path.exists(pth):
                 os.mkdir(pth)
     def close(self):

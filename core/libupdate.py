@@ -191,11 +191,11 @@ class Engine(pane):
         self.root = self
         self.z = 2000000
         self.pri = -2000000
-        self.root.width,self.root.height = [256,192]
+        self.root.width,self.root.height = [SCREEN_WIDTH,SCREEN_HEIGHT]
 
         self.list = scrollpane([0,0])
         self.list.rpos[1]=15
-        self.list.width,self.list.height = [256,140]
+        self.list.width,self.list.height = [SCREEN_WIDTH,140]
         self.list.status_box = editbox(None,"")
         self.list.status_box.draw_back = False
         self.list.status_box.draw(screen)
@@ -321,7 +321,7 @@ class Engine(pane):
             self.progress.text = "%sKB/%sKB - %s KB/s"%(read/1000.0,size/1000.0,bps/1000.0)
             if output:
                 self.progress.rpos = [0,0]
-                self.progress.width = 256
+                self.progress.width = SCREEN_WIDTH
                 self.progress.draw(output[0])
                 output[1]()
                 for evt in pygame.event.get():
@@ -404,7 +404,7 @@ def run(screen):
     start.rpos[1] = e.list.rpos[1]+e.list.height
     end = button(e,"Cancel")
     end.draw(screen)
-    end.rpos = [256-end.width,0]
+    end.rpos = [SCREEN_WIDTH-end.width,0]
     e.root.add_child(start)
     e.root.add_child(end)
     e.root.start_index = e.root.children.index(start)

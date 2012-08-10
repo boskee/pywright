@@ -1093,12 +1093,12 @@ would set 'x' to 12."""
         assets.variables["_allow_saveload"] = old
         return self._endscript()
     @category([VALUE("path","path, relative to game's directory, to save the screenshot, including file extension (.png or .jpg)"),
-                    KEYWORD("width","shrink screenshot to this width",256),
-                    KEYWORD("height","shrink screenshot to this height",192),
+                    KEYWORD("width","shrink screenshot to this width",gui.SCREEN_WIDTH),
+                    KEYWORD("height","shrink screenshot to this height",gui.SCREEN_HEIGHT),
                     KEYWORD("x","x-value of region to screenshot",0),
                     KEYWORD("y","y-value of region to screenshot",0),
-                    KEYWORD("rwidth","width of region to screenshot",256),
-                    KEYWORD("rheight","height of region to screenshot",192)],type="files")
+                    KEYWORD("rwidth","width of region to screenshot",gui.SCREEN_WIDTH),
+                    KEYWORD("rheight","height of region to screenshot",gui.SCREEN_HEIGHT)],type="files")
     def _screenshot(self,command,path,*args):
         """Takes a screenshot and saves the image. Can select a specific region of the screen to
         snapshot. Useful for custom interfaces, or just providing a snapshot feature."""
@@ -1564,8 +1564,8 @@ have a ball.txt describing it's animation qualities, if it has any."""
                 wait = 0
             if a=="wait":
                 wait = 1
-        if y>=192 and assets.num_screens == 1 and assets.screen_compress:
-            y -= 192
+        if y>=gui.SCREEN_HEIGHT and assets.num_screens == 1 and assets.screen_compress:
+            y -= gui.SCREEN_HEIGHT
         more["wait"] = wait
         if clear and func==bg:
             for o in self.obs[:]:
@@ -1799,8 +1799,8 @@ The four types of gui you can create are:
                 elif a.startswith("y="): y=int(a[2:])
                 elif a.startswith("z="): z=int(a[2:])
                 elif a.startswith("name="): name=a[5:]
-            if y>=192 and assets.num_screens == 1 and assets.screen_compress:
-                y -= 192
+            if y>=gui.SCREEN_HEIGHT and assets.num_screens == 1 and assets.screen_compress:
+                y -= gui.SCREEN_HEIGHT
             self.add_object(guiBack(x=x,y=y,z=z,name=name))
             self.buildmode = False
         if guitype=="Button":
@@ -1881,8 +1881,8 @@ The four types of gui you can create are:
                 #~ btn.s_graphic = graphic
                 #~ graphic = assets.open_art(graphic)[0]
             #~ btn.graphic = graphic
-            if y>=192 and assets.num_screens == 1 and assets.screen_compress:
-                y -= 192
+            if y>=gui.SCREEN_HEIGHT and assets.num_screens == 1 and assets.screen_compress:
+                y -= gui.SCREEN_HEIGHT
             eb.rpos = [x,y]
             if width:
                 eb.force_width = width
@@ -1914,8 +1914,8 @@ The four types of gui you can create are:
             id_name = text[0].replace("name=","",1)
             text = text[1:]
         y = int(y)
-        if y>=192 and assets.num_screens == 1 and assets.screen_compress:
-            y -= 192
+        if y>=gui.SCREEN_HEIGHT and assets.num_screens == 1 and assets.screen_compress:
+            y -= gui.SCREEN_HEIGHT
         tb = textblock(" ".join(text),[int(x),int(y)],[int(width),int(height)],surf=pygame.screen)
         self.add_object(tb)
         if id_name: tb.id_name = id_name
@@ -2980,10 +2980,10 @@ assets.make_start_script = make_start_script
             
 
 def make_screen():
-    if assets.swidth<256:
-        assets.swidth=256
-    if assets.sheight/assets.num_screens<192:
-        assets.sheight = 192*assets.num_screens
+    if assets.swidth<gui.SCREEN_WIDTH:
+        assets.swidth=gui.SCREEN_WIDTH
+    if assets.sheight/assets.num_screens<gui.SCREEN_HEIGHT:
+        assets.sheight = gui.SCREEN_HEIGHT*assets.num_screens
     if not hasattr(assets,"cur_screen"):
         assets.cur_screen = 0
     flags = pygame.RESIZABLE|pygame.FULLSCREEN*assets.fullscreen

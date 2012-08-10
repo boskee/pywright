@@ -8,7 +8,7 @@ import gui
 class msg(gui.pane):
     def __init__(self,m,assets):
         gui.pane.__init__(self)
-        self.width = 256
+        self.width = gui.SCREEN_WIDTH
         self.height = 100
         self.pri = -1001
         self.z = 11001

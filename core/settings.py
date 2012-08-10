@@ -33,8 +33,8 @@ assets.tool_path))
     
 def load(assets):
     assets.fullscreen = 0
-    assets.swidth = 256
-    assets.sheight = 192*2
+    assets.swidth = gui.SCREEN_WIDTH
+    assets.sheight = gui.SCREEN_HEIGHT*2
     assets.filter = 0
     assets.num_screens = 2
     assets.screen_compress = 0  #Whether to move objects on screen 2 to screen 1 if num_screens is 1
@@ -455,7 +455,7 @@ class settings_menu(gui.pane):
         assets = self.assets
         sw,sh = self.sw,self.sh
         self.res_box.pane.children[:] = []
-        h = 192
+        h = gui.SCREEN_HEIGHT
         if get_screen_mode(assets)=="two_screens":
             h*=2
         h2 = h*2

@@ -2,6 +2,9 @@ import pygame
 import sys,os
 import core
 
+SCREEN_WIDTH = 256
+SCREEN_HEIGHT = 192
+
 pygame.font.init()
 ft = pygame.font.Font(os.path.join("fonts","Vera.ttf"),10)
 
@@ -15,23 +18,23 @@ class Window(object):
 window = Window()
 
 defcol = {
-"bgcol" : [203,178,143],
-"bgcol2" : [183,137,72],
-"bgfocus" : [174,150,115],
-"textcol" : [0,0,0],
-"fgcol" : [208,144,40],
-"olcol" : [0,0,0],
-"butbg" : [142,65,0],
-"butborder" : [30,30,30],
-"buttext" : [253,251,234],
-"buthigh" : [214,165,49],
-"panebg" : [145,113,66],
-"paneborder" : [0,0,0],
-"scrollbg" : [0,112,0],
-"scrollfg" : [0,184,0],
-"sbarbg" : [108,44,20],
-"sbarfg" : [208,144,40],
-"gamebg":[225,223,175],
+"bgcol" : (203,178,143),
+"bgcol2" : (183,137,72),
+"bgfocus" : (174,150,115),
+"textcol" : (0,0,0),
+"fgcol" : (208,144,40),
+"olcol" : (0,0,0),
+"butbg" : (142,65,0),
+"butborder" : (30,30,30),
+"buttext" : (253,251,234),
+"buthigh" : (214,165,49),
+"panebg" : (145,113,66),
+"paneborder" : (0,0,0),
+"scrollbg" : (0,112,0),
+"scrollfg" : (0,184,0),
+"sbarbg" : (108,44,20),
+"sbarfg" : (208,144,40),
+"gamebg": (225,223,175),
 }
 
 class widget(object):
@@ -236,7 +239,7 @@ class editbox(widget):
         else:
             self.target_ob = target_ob
             self.target_attr = target_attr
-        self.height = self.font.render("TEST",1,[0,0,0]).get_height()
+        self.height = self.font.render("TEST",1,(0, 0, 0)).get_height()
         self.draw_back = True
         self.carat = 0
         self.force_width = None
@@ -323,8 +326,8 @@ class editbox(widget):
         textcol = self.textcol
         bgcol = self.bgcol
         bgcol2 = self.bgcol2
-        if not bgcol: bgcol = [0,0,0,0]
-        if not bgcol2: bgcol2 = [0,0,0,0]
+        if not bgcol: bgcol = (0, 0, 0, 0)
+        if not bgcol2: bgcol2 = (0, 0, 0, 0)
         if self == window.focused:
             bgcol = self.bgfocus
         if not getattr(self,"txtrender",None)==val:
@@ -402,14 +405,7 @@ class checkbox(widget):
             if checkbox.lastclicked:
                 go = 0
                 for x in self.parent.children:
-                    if x==checkbox.lastclicked:
-                        x.set_checked(checkbox.lastoperation)
-                        if not go:
-                            go = 1
-                        else:
-                            checkbox.lastoperation = not checkbox.lastoperation
-                            return
-                    elif x==self:
+                    if x==checkbox.lastclicked or x==self:
                         x.set_checked(checkbox.lastoperation)
                         if not go:
                             go = 1
@@ -529,7 +525,7 @@ class pane(widget):
             surf.fill(self.bgcolor)
         else:
             surf = surf.convert_alpha()
-            surf.fill([0,0,0,0])
+            surf.fill((0, 0, 0, 0))
         x = self.offset[0]
         yoff = self.offset[1]
         y = yoff
@@ -650,8 +646,8 @@ class scrollpane(pane):
 class directory(pane):
     def populate(self,dir,variabledest,variablename,filter,close_on_choose=True):
         self.children[:] = []
-        self.width=256
-        self.height=192
+        self.width=SCREEN_WIDTH
+        self.height=SCREEN_HEIGHT
         self.files = scrollpane([10,20])
         self.files.width = 240
         self.files.height = 140
@@ -689,7 +685,7 @@ class directory(pane):
         self.file.force_width = 250
         self.children.append(self.file)
         
-        self.buttonpane = pane(size=[256,20])
+        self.buttonpane = pane(size=[SCREEN_WIDTH,20])
         self.buttonpane.align = ""
         self.buttonpane.border = False
         self.children.append(self.buttonpane)

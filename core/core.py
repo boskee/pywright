@@ -46,7 +46,8 @@ try:
 except:
     numpy = None
     pygame.use_numpy = False
-sw,sh = 256,192
+sw = gui.SCREEN_WIDTH
+sh = gui.SCREEN_HEIGHT
 #sw,sh = 640,480
 spd = 6
 
@@ -869,7 +870,7 @@ set _font_new_resume_size 14""".split("\n"):
         self.stack.append(self.Script())
         if mode == "casemenu" and not os.path.exists(game+"/"+script+".txt"):
             self.cur_script.obs = [bg("main"),bg("main"),case_menu(game)]
-            self.cur_script.obs[1].pos = [0,192]
+            self.cur_script.obs[1].pos = [0,gui.SCREEN_HEIGHT]
             return
         #assets.show_load()
         print "set game to",assets.game
@@ -930,7 +931,7 @@ def color_str(rgbstring):
 def trans_y(y):
     """Alter y value to place us in the proper screen"""
     if assets.num_screens==1:
-        y-=192
+        y-=gui.SCREEN_HEIGHT
     return y
         
 class ws_button(gui.button):
@@ -1346,13 +1347,8 @@ class portrait(sprite):
     img = property(get_self_image)
     def makestr(self):
         """A wrightscript string to recreate the object"""
-        xs = ""
-        ys = ""
-        zs = ""
-        id = ""
-        emo = ""
+        xs = ys = zs = id = emo = nt = ""
         if self.emoname != "normal": emo = "e="+self.emoname+" "
-        nt = ""
         if self.pos[0]: xs = "x="+str(self.pos[0])+" "
         if self.pos[1]: ys = "y="+str(self.pos[1])+" "
         if type(self.z)==type(""):
@@ -1723,7 +1719,7 @@ class press_button(fadesprite,gui.widget):
         self.normal = assets.open_art("general/press/press_old")[0]
         self.high = assets.open_art("general/press/press_old_high")[0]
         self.highlight = False
-        self.pos = [0,192]
+        self.pos = [0,gui.SCREEN_HEIGHT]
         self.screen_setting = "try_bottom"
         gui.widget.__init__(self,self.pos,self.normal.get_size(),parent)
         self.width,self.height = self.normal.get_size()
@@ -1741,7 +1737,7 @@ class present_button(fadesprite,gui.widget):
         self.high = assets.open_art("general/press/present_old_high")[0]
         self.rect = self.normal.get_rect()
         self.highlight = False
-        self.pos = [sw-self.rect.width,192]
+        self.pos = [sw-self.rect.width,gui.SCREEN_HEIGHT]
         self.screen_setting = "try_bottom"
         gui.widget.__init__(self,self.pos,self.normal.get_size(),parent)
         self.width,self.height = self.normal.get_size()
@@ -2175,9 +2171,9 @@ class textbox(gui.widget):
                         center = not center
                     if center:
                         x = (sw-img.get_width())//2
-                    if x+img.get_width()>256:
+                    if x+img.get_width()>gui.SCREEN_WIDTH:
                         if not getattr(self,"OVERAGE",None) and vtrue(assets.variables.get("_debug","false")):
-                            self.OVERAGE = x+img.get_width()-256
+                            self.OVERAGE = x+img.get_width()-gui.SCREEN_WIDTH
                             raise offscreen_text('Text Overflow:"%s" over by %s'%(line,self.OVERAGE))
                     self.img.blit(img,[x,y])
                     y+=inc
@@ -2266,7 +2262,7 @@ class uglyarrow(fadesprite):
             self.border_top.pos = self.pos
             self.border_top.draw(dest)
             self.border_bottom.pos[0] = self.pos[0]
-            self.border_bottom.pos[1] = self.pos[1]+192-self.border_bottom.height
+            self.border_bottom.pos[1] = self.pos[1]+gui.SCREEN_HEIGHT-self.border_bottom.height
             self.border_bottom.draw(dest)
     def over(self,mp):
         if self.button:
@@ -2332,7 +2328,7 @@ class menu(fadesprite,gui.widget):
             self.enter_down()
     def __init__(self):
         self.bg = None
-        oy = 192
+        oy = gui.SCREEN_HEIGHT
         fadesprite.__init__(self,x=0,y=oy)
         gui.widget.__init__(self,[0,oy],[sw,sh])
         self.load("general/black")
@@ -2490,7 +2486,7 @@ class listmenu(fadesprite,gui.widget):
             self.enter_down()
     def __init__(self,tag=None):
         self.pri = ulayers.index(self.__class__.__name__)
-        x,y = 0,192
+        x,y = 0,gui.SCREEN_HEIGHT
         gui.widget.__init__(self,[x,y],[sw,sh])
         fadesprite.__init__(self,x=x,y=y)
         self.load(assets.variables.get("_list_bg_image","general/black"))
@@ -2741,7 +2737,7 @@ class case_menu(fadesprite,gui.widget):
         if self.reload:
             self.option_imgs = []
             self.__init__(self.path)
-        spd = (self.choice*256-self.x)/25.0
+        spd = (self.choice*gui.SCREEN_WIDTH-self.x)/25.0
         if abs(spd)>0 and abs(spd)<10:
             spd = 10*abs(spd)/spd
         spd *= assets.dt
@@ -2815,7 +2811,7 @@ class examine_menu(sprite,gui.widget):
         self.name = name
         self.pri = ulayers.index(self.__class__.__name__)
         sprite.__init__(self)
-        self.pos = [0,192]
+        self.pos = [0,gui.SCREEN_HEIGHT]
         self.z = zlayers.index(self.__class__.__name__)
         self.width = sw
         self.height = sh
@@ -2839,8 +2835,8 @@ class examine_menu(sprite,gui.widget):
         scroll_amt = assets.variables.get("_xscroll_"+self.name,0)
         if scroll_amt==-1:
             self.xscroll = -1
-            if self.getoffset()!=-256:
-                assets.cur_script.obs.append(scroll(amtx=-256,amty=0,speed=256))
+            if self.getoffset()!=-gui.SCREEN_WIDTH:
+                assets.cur_script.obs.append(scroll(amtx=-gui.SCREEN_WIDTH,amty=0,speed=gui.SCREEN_WIDTH))
         self.blocking = not vtrue(assets.variables.get("_examine_skipupdate","0"))
         self.screen_setting = "try_bottom"
     def init_normal(self):
@@ -2921,7 +2917,7 @@ class examine_menu(sprite,gui.widget):
         #~ if vtrue(assets.variables.get("_debug","false")):
             #~ x = int(assets.variables.get("_examine_offsetx",0))
             #~ y = int(assets.variables.get("_examine_offsety",0))
-            #~ tb = textblock("offsetx:%s offsety%s"%(x,y),[0,192],[256,20],[255,255,255])
+            #~ tb = textblock("offsetx:%s offsety%s"%(x,y),[0,gui.SCREEN_HEIGHT],[gui.SCREEN_WIDTH,20],[255,255,255])
             #~ tb.draw(dest)
     def update(self,*args):
         if self.xscrolling:
@@ -3024,7 +3020,7 @@ class evidence_menu(fadesprite,gui.widget):
             self.back = False
             self.back_button.unhighlight()
             self.enter_down()
-        if mp[0]>=0 and mp[0]<=78 and mp[1]>=162 and mp[1]<=192:
+        if mp[0]>=0 and mp[0]<=78 and mp[1]>=162 and mp[1]<=gui.SCREEN_HEIGHT:
             if self.canback():
                 self.back = True
                 self.enter_down()
@@ -3063,7 +3059,7 @@ class evidence_menu(fadesprite,gui.widget):
         fadesprite.load(self,*args,**kwargs)
     def __init__(self,items=[],gba=True):
         self.pri = ulayers.index(self.__class__.__name__)
-        x,y = 0,192
+        x,y = 0,gui.SCREEN_HEIGHT
         self.z = zlayers.index(self.__class__.__name__)
         print "evidence z",self.z
         fadesprite.__init__(self,x=x,y=y)
@@ -3096,7 +3092,7 @@ class evidence_menu(fadesprite,gui.widget):
         
         self.present_button = present_button(self)
         self.present_button.pos = [int(assets.variables["ev_present_x"]),
-                    int(assets.variables["ev_present_y"])+192]
+                    int(assets.variables["ev_present_y"])+gui.SCREEN_HEIGHT]
         self.pages_set = assets.variables.get("_ev_pages","evidence profiles").split(" ")
         for p in self.pages_set[:]:
             if not vtrue(assets.variables.get("_%s_enabled"%p,"true")):
@@ -3174,7 +3170,7 @@ class evidence_menu(fadesprite,gui.widget):
                     for icon in line:
                         scroll += 1
             if scroll>1:
-                self.scroll = 256
+                self.scroll = gui.SCREEN_WIDTH
                 self.scroll_dir = 1
         self.choose()
     def k_right(self):
@@ -3211,7 +3207,7 @@ class evidence_menu(fadesprite,gui.widget):
                     for icon in line:
                         scroll += 1
             if scroll>1:
-                self.scroll = 256
+                self.scroll = gui.SCREEN_WIDTH
                 self.scroll_dir = -1
         self.choose()
     def k_up(self):
@@ -3424,8 +3420,8 @@ class evidence_menu(fadesprite,gui.widget):
                     self.scroll -= 16*assets.dt
                     if self.scroll<0:
                         self.scroll=0
-                    self.draw_ev_zoom(self.lastchoose,[(256-self.scroll+pos[0])*self.scroll_dir,pos[1]],dest)
-                    self.draw_ev_zoom(self.chosen_icon,[256*(-self.scroll_dir)+(256-self.scroll+pos[0])*self.scroll_dir,pos[1]],dest)
+                    self.draw_ev_zoom(self.lastchoose,[(gui.SCREEN_WIDTH-self.scroll+pos[0])*self.scroll_dir,pos[1]],dest)
+                    self.draw_ev_zoom(self.chosen_icon,[gui.SCREEN_WIDTH*(-self.scroll_dir)+(gui.SCREEN_WIDTH-self.scroll+pos[0])*self.scroll_dir,pos[1]],dest)
                 else:
                     self.draw_ev_zoom(self.chosen_icon,pos[:],dest)
                 chk = assets.variables.get(self.chosen+"_check",None)
@@ -3599,7 +3595,7 @@ class scroll(effect):
             self.amtz=0
         for o in self.obs:
             if getattr(o,"kill",0): continue
-            if hasattr(o,"pos") and (not self.filter or self.filter=="top" and o.pos[1]<192 or self.filter=="bottom" and o.pos[1]>=192):
+            if hasattr(o,"pos") and (not self.filter or self.filter=="top" and o.pos[1]<gui.SCREEN_HEIGHT or self.filter=="bottom" and o.pos[1]>=gui.SCREEN_HEIGHT):
                 o.pos[0]+=ndx
                 o.pos[1]+=ndy
             if isinstance(o,mesh):
@@ -3896,7 +3892,7 @@ class shake(effect):
     def draw(self,dest):
         o = int(self.offset)
         if self.screen_setting == "top":
-            dest.subsurface([[0,0],[256,192]]).blit(dest.subsurface([[0,0],[256,192]]).copy(),[random.randint(-o,o),random.randint(-o,o)])
+            dest.subsurface([[0,0],[gui.SCREEN_WIDTH,gui.SCREEN_HEIGHT]]).blit(dest.subsurface([[0,0],[gui.SCREEN_WIDTH,gui.SCREEN_HEIGHT]]).copy(),[random.randint(-o,o),random.randint(-o,o)])
         elif self.screen_setting == "both":
             dest.blit(dest.copy(),[random.randint(-o,o),random.randint(-o,o)])
     def update(self):
@@ -3917,7 +3913,7 @@ class guiBack(sprite,gui.widget):
             image = "general/back"
         self.image = image
         self.unhighlight()
-        self.pos = [0,192+sh-self.img.get_height()]
+        self.pos = [0,gui.SCREEN_HEIGHT+sh-self.img.get_height()]
         if x is not None:
             self.pos[0] = x
         if y is not None:
@@ -4042,7 +4038,7 @@ class error_msg(gui.pane):
             self.children.append(msg)
         self.lineno = lineno
         self.script = script
-        self.width=256
+        self.width=gui.SCREEN_WIDTH
         self.height=len(msg_lines)*20
         if vtrue(assets.variables.get("_production","false")):
             self.delete()
@@ -4057,8 +4053,8 @@ class script_code(gui.pane):
     def __init__(self,script):
         gui.pane.__init__(self)
         self.rpos = [0,0]
-        self.width = 256
-        self.height = 192
+        self.width = gui.SCREEN_WIDTH
+        self.height = gui.SCREEN_HEIGHT
         self.pri = -10000
         self.z = 10000
         self.children.append(gui.label(script.scene))
