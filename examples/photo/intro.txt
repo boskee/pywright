@@ -43,7 +43,7 @@ joinvar v pic_ $photos _check
 set $v viewphoto
 #joinvar v pic_ $photos _pic
 #set $v photo
-joinvar path photo/art/ev/ pic_ $photos
+joinvar path photo/data/art/ev/ pic_ $photos
 screenshot $path x=10 y=202 rwidth=236 rheight=172 width=70 height=70
 
 clear

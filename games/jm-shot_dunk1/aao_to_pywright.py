@@ -93,20 +93,22 @@ for line in lines:
 print namespace["donnees_messages"][1]
 
 def create_folders():
-    if not os.path.exists("art"):
-        os.mkdir("art")
-    if not os.path.exists("art/fg"):
-        os.mkdir("art/fg")
-    if not os.path.exists("art/bg"):
-        os.mkdir("art/bg")
-    if not os.path.exists("art/ev"):
-        os.mkdir("art/ev")
-    if not os.path.exists("art/port"):
-        os.mkdir("art/port")
-    if not os.path.exists("music"):
-        os.mkdir("music")
-    if not os.path.exists("sfx"):
-        os.mkdir("sfx")
+    if not os.path.exists("data"):
+        os.mkdir("data")
+    if not os.path.exists("data/art"):
+        os.mkdir("data/art")
+    if not os.path.exists("data/art/fg"):
+        os.mkdir("data/art/fg")
+    if not os.path.exists("data/art/bg"):
+        os.mkdir("data/art/bg")
+    if not os.path.exists("data/art/ev"):
+        os.mkdir("data/art/ev")
+    if not os.path.exists("data/art/port"):
+        os.mkdir("data/art/port")
+    if not os.path.exists("data/music"):
+        os.mkdir("data/music")
+    if not os.path.exists("data/sfx"):
+        os.mkdir("data/sfx")
 create_folders()
 
 colors = {"red": "{c900}", "white":"{c999}", 
@@ -203,7 +205,7 @@ def bg(t):
     nicet = nice_name(t)
     bgname = nicet.replace(".jpg",".png")
     print bgname,url
-    saveto = "art/bg/"+bgname
+    saveto = "data/art/bg/"+bgname
     wget(url,saveto)
     return bgname.rsplit(".",1)[0]
 def fg(t):
@@ -214,7 +216,7 @@ def fg(t):
         url = "http://aceattorney.sparklin.org/"+t
     nicet = nice_name(t)
     fgname = nicet
-    saveto = "art/fg/"+fgname
+    saveto = "data/art/fg/"+fgname
     wget(url,saveto)
     return fgname.rsplit(".",1)[0]
 def makeev(t):
@@ -226,7 +228,7 @@ def makeev(t):
     try:
         nicet = t.replace("/","_").replace(":","")
         fgname = "aao_"+nicet
-        saveto = "art/ev/"+fgname
+        saveto = "data/art/ev/"+fgname
         img = wget(url,saveto)
         return fgname.replace(".jpg","").replace(".png","").replace(".gif","")
     except:
@@ -234,21 +236,21 @@ def makeev(t):
         return None
 def setupchar(id, name, talk, blink):
     charname = "aao_"+id
-    if not os.path.exists("art/port/"+charname):
-        os.mkdir("art/port/"+charname)
+    if not os.path.exists("data/art/port/"+charname):
+        os.mkdir("data/art/port/"+charname)
     talkname = nice_name(talk).rsplit(".",1)[0]+"(talk).png"
-    if not os.path.exists("art/port/"+charname+"/"+talkname):
+    if not os.path.exists("data/art/port/"+charname+"/"+talkname):
         url = talk
         if not url.startswith("http://"):
             url = "http://aceattorney.sparklin.org/"+url
-        wget(url,"art/port/"+charname+"/"+talkname)
+        wget(url,"data/art/port/"+charname+"/"+talkname)
     blinkname = nice_name(talk).rsplit(".",1)[0]+"(blink).png"
     if blink:
-        if not os.path.exists("art/port/"+charname+"/"+blinkname):
+        if not os.path.exists("data/art/port/"+charname+"/"+blinkname):
             url = blink
             if not url.startswith("http://"):
                 url = "http://aceattorney.sparklin.org/"+url
-            wget(url,"art/port/"+charname+"/"+blinkname)
+            wget(url,"data/art/port/"+charname+"/"+blinkname)
     return charname, nice_name(talk).rsplit(".",1)[0]
 
 

@@ -68,8 +68,8 @@ class WorkThread:
         while self.conversions:
             conv = self.conversions.pop()
             if "charname" in conv:
-                if not os.path.exists(self.rootpath+"/art/port/"+conv["charname"]):
-                    os.mkdir(self.rootpath+"/art/port/"+conv["charname"])
+                if not os.path.exists(self.rootpath+"/data/art/port/"+conv["charname"]):
+                    os.mkdir(self.rootpath+"/data/art/port/"+conv["charname"])
             #print "..."
             #print "churn on",conv["url"]
             wget(conv["url"],self.rootpath+"/"+conv["dest"])
@@ -95,7 +95,7 @@ class Resources:
     def create_folders(self):
         if not os.path.exists(self.temppath):
             os.mkdir(self.temppath)
-        for pth in ["","art","art/fg","art/bg","art/ev","art/port","music","sfx"]:
+        for pth in ["","data/art","data/art/fg","data/art/bg","data/art/ev","data/art/port","data/music","data/sfx"]:
             pth = self.rootpath+"/"+pth
             if not os.path.exists(pth):
                 os.mkdir(pth)
@@ -285,7 +285,7 @@ def add_art(t,type):
         url = "http://aceattorney.sparklin.org/"+t
     nicet = nice_name(t)
     name = nicet.replace(".jpg",".png")
-    saveto = "art/"+type+"/"+name
+    saveto = "data/art/"+type+"/"+name
     getattr(res,type)[name] = {"url":url,"dest":saveto}
     return name.rsplit(".",1)[0]
 def bg(t):
@@ -302,7 +302,7 @@ def setupchar(id, name, talk, blink):
     for name,url in [[talkname,talk],[blinkname,blink]]:
         if not url.startswith("http://"):
             url = "http://aceattorney.sparklin.org/"+url
-        res.port[name] = {"url":url,"dest":"art/port/"+charname+"/"+name,"charname":charname}
+        res.port[name] = {"url":url,"dest":"data/art/port/"+charname+"/"+name,"charname":charname}
     return charname, nice_name(talk).rsplit(".",1)[0]
 def song(t,path):
     """Download song, return song name to play"""

@@ -366,14 +366,14 @@ class Assets(object):
             self.real_path = img.real_path
             return img
         self.meta = meta()
-        pre = "art/"
+        pre = "data/art/"
         self.game = self.game.replace("\\","/")
         case = self.game
         game = self.game.rsplit("/",1)[0]
-        if os.path.exists(game+"/art/"+name):
-            pre = game+"/art/"
-        if os.path.exists(case+"/art/"+name):
-            pre = case+"/art/"
+        if os.path.exists(game+"/data/art/"+name):
+            pre = game+"/data/art/"
+        if os.path.exists(case+"/data/art/"+name):
+            pre = case+"/data/art/"
         if os.path.exists(pre+name[:-4]+".txt"):
             try:
                 f = open(pre+name[:-4]+".txt")
@@ -449,12 +449,12 @@ class Assets(object):
         if self.sound_init==1: return True
         return False
     def get_music_path(self,track,pre=None):
-        if pre is None: pre = "music/"
+        if pre is None: pre = "data/music/"
         game = self.game.replace("\\","/").rsplit("/",1)[0]
-        if os.path.exists(game+"/music/"+track):
-            pre = game+"/music/"
-        if os.path.exists(self.game+"/music/"+track):
-            pre = self.game+"/music/"
+        if os.path.exists(game+"/data/music/"+track):
+            pre = game+"/data/music/"
+        if os.path.exists(self.game+"/data/music/"+track):
+            pre = self.game+"/data/music/"
         return pre+track
     def open_music(self,track,pre=None):
         path = self.get_music_path(track,pre)
@@ -476,14 +476,14 @@ class Assets(object):
     def play_sound(self,name,wait=False,volume=1.0,offset=0,frequency=1):
         #self.init_sound()
         if self.sound_init == -1: return
-        pre = "sfx/"
+        pre = "data/sfx/"
         game = self.game.replace("\\","/").rsplit("/",1)[0]
         if os.path.exists(game+"/"+name):
             pre = game+"/"
-        if os.path.exists(game+"/sfx/"+name):
-            pre = game+"/sfx/"
-        if os.path.exists(self.game+"/sfx/"+name):
-            pre = self.game+"/sfx/"
+        if os.path.exists(game+"/data/sfx/"+name):
+            pre = game+"/data/sfx/"
+        if os.path.exists(self.game+"/data/sfx/"+name):
+            pre = self.game+"/data/sfx/"
         if self.snds.get(name,None):
             snd = self.snds[name]
         else:
@@ -1288,7 +1288,7 @@ class portrait(object):
         def shrink(t):
             if not t.startswith("/"):
                 t = "/"+t
-            return t[t.rfind("/art/")+5:-4]
+            return t[t.rfind("/data/art/")+5:-4]
             
         def loadfrom(path):
             if not path.endswith("/"):path+="/"
@@ -1328,12 +1328,12 @@ class portrait(object):
                 if self.blink_sprite.blinkmode=="blinknoset": self.blink_sprite.blinkmode = "stop"
 
         game = assets.game.replace("\\","/").rsplit("/",1)[0]
-        if os.path.exists(assets.game+"/art/port/"+charname):
-            loadfrom(assets.game+"/art/port/"+charname)
-        elif os.path.exists(game+"/art/port/"+charname):
-            loadfrom(game+"/art/port/"+charname)
-        elif os.path.exists("art/port/"+charname):
-            loadfrom("art/port/"+charname)
+        if os.path.exists(assets.game+"/data/art/port/"+charname):
+            loadfrom(assets.game+"/data/art/port/"+charname)
+        elif os.path.exists(game+"/data/art/port/"+charname):
+            loadfrom(game+"/data/art/port/"+charname)
+        elif os.path.exists("data/art/port/"+charname):
+            loadfrom("data/art/port/"+charname)
         else:
             raise art_error("Character folder %s not found"%charname)
         

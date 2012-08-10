@@ -628,7 +628,7 @@ class Script(gui.widget):
         assets.framerate = int(fr)
     @category([COMBINED("text","Text to be print in the textbox, with markup.","")],type="text")
     def _textbox(self,command,line):
-        """Draws a several line animated textbox to the screen. Uses art/general/textbox_2 as the back
+        """Draws a several line animated textbox to the screen. Uses data/art/general/textbox_2 as the back
         drop. The letters of the textbox will print one by one at a set rate, which can be modified
         with the markup commands. If there is a character speaking (the _speaking variable is set, a char
         command has just been issued, etc) then the character will animate as the text is output.
@@ -1519,7 +1519,7 @@ as having a non looping animation play several times, or only playing a portion 
         m.load()
         print "made mesh",m
         self.add_object(m)
-    @category([VALUE("graphic_path","Path to the graphics file relative to case/art and without extension; such as bg/scene1 for games/mygame/mycase/art/bg/scene1.png and scene1.txt"),
+    @category([VALUE("graphic_path","Path to the graphics file relative to case/art and without extension; such as bg/scene1 for games/mygame/mycase/data/art/bg/scene1.png and scene1.txt"),
 KEYWORD("x","set the x value",0),
 KEYWORD("y","set the y value",0),
 KEYWORD("z","set the z value (check PyWright/core/sorting.txt for idea of z values)","sorting.txt lists default object z values"),
@@ -1599,7 +1599,7 @@ have a ball.txt describing it's animation qualities, if it has any."""
         m = movie(file,sound)
         self.add_object(m,True)
         return m
-    @category([VALUE("bg_path","Path to the graphics file relative to case/art/bg and without extension; such as scene1 for games/mygame/mycase/art/bg/scene1.png and scene1.txt"),
+    @category([VALUE("bg_path","Path to the graphics file relative to case/data/art/bg and without extension; such as scene1 for games/mygame/mycase/data/art/bg/scene1.png and scene1.txt"),
 KEYWORD("x","set the x value",0),
 KEYWORD("y","set the y value",0),
 KEYWORD("z","set the z value (check PyWright/core/sorting.txt for idea of z values)","sorting.txt lists default bg z values"),
@@ -1615,7 +1615,7 @@ TOKEN("wait","Wait until animation is finished to continue")],type="objects")
 default to a lower z value than other objects, ensuring that they will be in the background (though this can be modified). Other than that,
 backgrounds have the same properties as other graphic objects, and may be animated or manipulated."""
         return self._obj(command,*args)
-    @category([VALUE("fg_path","Path to the graphics file relative to case/art/fg and without extension; such as fence for games/mygame/mycase/art/fg/fence.png and fence.txt"),
+    @category([VALUE("fg_path","Path to the graphics file relative to case/data/art/fg and without extension; such as fence for games/mygame/mycase/data/art/fg/fence.png and fence.txt"),
 KEYWORD("x","set the x value",0),
 KEYWORD("y","set the y value",0),
 KEYWORD("z","set the z value (check PyWright/core/sorting.txt for idea of z values)","sorting.txt lists default fg z values"),
@@ -1649,7 +1649,7 @@ ev housekey
 "House key added to court record"
 }}}"""
         self._obj(command,*args)
-    @category([VALUE("character_name","Name of character folder in art/port. If the character is to be hidden, the character_name doesn't need to match up to any actual directory. Graphics will be loaded from that directory according to the visible emotion"),
+    @category([VALUE("character_name","Name of character folder in data/art/port. If the character is to be hidden, the character_name doesn't need to match up to any actual directory. Graphics will be loaded from that directory according to the visible emotion"),
 KEYWORD("nametag","The name to actually display to the player as this character's name.","character_name"),
 KEYWORD("e","The character's starting emotion","normal"),
 KEYWORD("be","The emotion to use while character is in the blink pose"),
@@ -1676,7 +1676,7 @@ on a text by text basis, with "{soundnewsound.ogg}The text sound has now been ch
 
 A new default sound, based on the characters id name (the name used for their art folder, and used by the char command as 
 in 'char name') can be set. The syntax is 'set char_defsound_[name] [sound file]', where [name] is the name you will use, 
-and [sound file] is the filename relative to the sfx/ folder to play for the text blip sound.
+and [sound file] is the filename relative to the data/sfx/ folder to play for the text blip sound.
 
 The default blip for characters who aren't predefined in this way can be changed from blipmale.ogg to something else by
 setting the variable 'char_defsound': 'set char_defsound [sound file]'
@@ -2131,7 +2131,7 @@ the speed would divide evenly over the distance)."""
         if name:
             scr.control(name)
         if wait: self.buildmode = False
-    @category([COMBINED("filename","Filename of song, searches game/case/music, game/music, and PyWright/music","If no path is listed, music will stop")],type="music")
+    @category([COMBINED("filename","Filename of song, searches game/case/data/music, game/data/music, and PyWright/data/music","If no path is listed, music will stop")],type="music")
     def _mus(self,command,*song):
         """Stops currently playing music file, and if 'filename' is given, starts playing a new one. If you want to queue up a song to play when the current
         song is finished, used for situations where you want an intro to a looping track, run this code anytime after the mus command: {{{set _music_loop track_name}}}.
@@ -2168,7 +2168,7 @@ the speed would divide evenly over the distance)."""
 
 set [tag]_name: the name displayed to the player on court record screen for this item, defaults to the tag itself
 
-set [tag]_pic: the image to use, should be in game/case/art/ev, or game/art/ev, defaults to the tag ([tag].png in art/ev)
+set [tag]_pic: the image to use, should be in game/case/data/art/ev, or game/data/art/ev, defaults to the tag ([tag].png in data/art/ev)
 
 set [tag]_desc: the long description of the evidence, shown on zoomed court record view, defaults to blank
 
@@ -2758,7 +2758,7 @@ class choose_game(gui.widget):
         games = []
         for f in os.listdir(path):
             if f.startswith("."): continue
-            if f in ["art","music","sfx","fonts"]:
+            if f in ["data/art","data/music","data/sfx","fonts"]:
                 continue
             if not os.path.isdir(path+"/"+f):
                 continue
@@ -2994,7 +2994,7 @@ def make_screen():
     pygame.screen = pygame.Surface([sw,sh*2]).convert()
     pygame.blank = pygame.screen.convert()
     pygame.blank.fill([0,0,0])
-    pygame.display.set_icon(pygame.image.load("art/general/bb.png"))
+    pygame.display.set_icon(pygame.image.load("data/art/general/bb.png"))
     if pygame.joystick.get_init():
         pygame.joystick.quit()
     pygame.joystick.init()

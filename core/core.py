@@ -441,7 +441,7 @@ set _font_new_resume_size 14""".split("\n"):
             self.real_path = img.real_path
             return img
         self.meta = meta()
-        pre = "art/"
+        pre = "data/art/"
         textpath = self.registry.lookup(pre+name+".txt",True)
         if not textpath:
             textpath = self.registry.lookup(pre+name.rsplit(".",1)[0]+".txt",True)
@@ -538,7 +538,7 @@ set _font_new_resume_size 14""".split("\n"):
             if os.path.exists(pre[1:]+t):
                 return pre[1:]+t
         return pre+track
-    def open_music(self,track,pre="music"):
+    def open_music(self,track,pre="data/music"):
         p = self.get_path(track,"music",pre)
         if not p:
             return False
@@ -569,7 +569,7 @@ set _font_new_resume_size 14""".split("\n"):
             if time.time()-self.sound_repeat_timer[name]<self.min_sound_time:
                 return
         self.sound_repeat_timer[name] = time.time()
-        path = self.get_path(name,"sound","sfx")
+        path = self.get_path(name,"sound","data/sfx")
         if self.snds.get(path,None):
             snd = self.snds[path]
         else:
@@ -591,7 +591,7 @@ set _font_new_resume_size 14""".split("\n"):
             snd.volume = (self.sound_volume/100.0)*volume
         channel = snd.play()
         return channel
-    def play_music(self,track=None,loop=0,pre="music",reset_track=True):
+    def play_music(self,track=None,loop=0,pre="data/music",reset_track=True):
         print self.music_volume,self.variables.get("_music_fade",None)
         if reset_track:
             assets.variables["_music_loop"] = track
@@ -1192,7 +1192,7 @@ class mesh(sprite):
         if not con:
             return
         self.con = con
-        path = assets.game+"/art/models/"
+        path = assets.game+"/data/art/models/"
         self.ob = ob = con.context.load_object(self.meshfile,path)
         ob.trans(z=-100)
         ob.rot(90,0,0)
@@ -1431,7 +1431,7 @@ class portrait(sprite):
         def shrink(t):
             if not t.startswith("/"):
                 t = "/"+t
-            return t[t.rfind("/art/")+5:-4]
+            return t[t.rfind("/data/art/")+5:-4]
             
         def loadfrom(path):
             if not path.endswith("/"):path+="/"
@@ -1440,15 +1440,15 @@ class portrait(sprite):
             print path+blinkemo+"(blink)"
             blink = assets.registry.lookup(path+blinkemo+"(blink)")
             if blink and not hasattr(self.blink_sprite,"img"):
-                self.blink_sprite.load(blink.rsplit("art/",1)[1][:-4])
+                self.blink_sprite.load(blink.rsplit("data/art/",1)[1][:-4])
                 
             talk = assets.registry.lookup(path+emo+"(talk)")
             if talk and not hasattr(self.talk_sprite,"img"):
-                self.talk_sprite.load(talk.rsplit("art/",1)[1][:-4])
+                self.talk_sprite.load(talk.rsplit("data/art/",1)[1][:-4])
                 
             combined = assets.registry.lookup(path+emo+"(combined)")
             if combined and not hasattr(self.combined,"img"):
-                self.combined.load(combined.rsplit("art/",1)[1][:-4])
+                self.combined.load(combined.rsplit("data/art/",1)[1][:-4])
                 if not self.combined.split:
                     self.combined.split = len(self.combined.base)//2
                 self.talk_sprite.load(self.combined.base[:self.combined.split])
@@ -1468,7 +1468,7 @@ class portrait(sprite):
             
             available = assets.registry.lookup(path+emo)
             if available and not hasattr(self.blink_sprite,"img"):
-                self.blink_sprite.load(available.rsplit("art/",1)[1][:-4])
+                self.blink_sprite.load(available.rsplit("data/art/",1)[1][:-4])
                 if self.blink_sprite.blinkmode=="blinknoset": self.blink_sprite.blinkmode = "stop"
             
             print blink,talk,combined,available
@@ -1476,7 +1476,7 @@ class portrait(sprite):
                 return True
             raise art_error("Character folder %s not found"%charname)
 
-        loadfrom("art/port/"+charname)
+        loadfrom("data/art/port/"+charname)
         if hasattr(self.talk_sprite,"img") and not hasattr(self.blink_sprite,"img"):
             self.blink_sprite.img = i = self.talk_sprite.img
             self.blink_sprite.base = [i]

@@ -436,7 +436,7 @@ def draw(list=[]):
         
 if __name__=="__main__":
     init([320,240])
-    tq = TexQuad([0,-240],"../art/general/logo.png")
+    tq = TexQuad([0,-240],"../data/art/general/logo.png")
     tqsub = tq.subsurface([[100,0],[100,100]])
     tqsub.pos = [100,-180]
     o = tqsub

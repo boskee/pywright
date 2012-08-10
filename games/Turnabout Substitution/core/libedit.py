@@ -100,7 +100,7 @@ class aline(pane):
         self.align = "horiz"
         self.border = False
         if not aline.arrow:
-            aline.arrow = pygame.image.load("art/general/arrow_right.png")
+            aline.arrow = pygame.image.load("data/art/general/arrow_right.png")
         self.offset = [15,0]
     def focus(self):
         window.focused = self
@@ -577,7 +577,7 @@ class case_menu(scrollpane):
         for d in os.listdir(assets.game):
             if d in [".svn"]: continue
             if not os.path.isdir(assets.game+"/"+d): continue
-            if d in ["art","music","sfx","movies"]: continue
+            if d in ["data/art","data/music","data/sfx","movies"]: continue
             b = button(self," "+d)
             if os.path.exists(assets.game+"/"+d+"/intro.txt"):
                 b.bgcolor = [20,200,50]
@@ -626,11 +626,11 @@ class new_case_menu(pane):
             self.children[2].text = "Error: path already exists"
             return
         os.mkdir(pth)
-        os.mkdir(pth+"/art")
-        for ad in os.listdir("art"):
-            os.mkdir(pth+"/art/"+ad)
-        os.mkdir(pth+"/music")
-        os.mkdir(pth+"/sfx")
+        os.mkdir(pth+"/data/art")
+        for ad in os.listdir("data/art"):
+            os.mkdir(pth+"/data/art/"+ad)
+        os.mkdir(pth+"/data/music")
+        os.mkdir(pth+"/data/sfx")
         os.mkdir(pth+"/movies")
         f = open(pth+"/intro.txt","w")
         f.write("bg black\n\"Welcome to your brand new case!\"\n")
@@ -686,11 +686,11 @@ class new_game_menu(pane):
             return
         pth = "games/"+self.game_name
         os.mkdir(pth)
-        os.mkdir(pth+"/art")
-        for ad in os.listdir("art"):
-            os.mkdir(pth+"/art/"+ad)
-        os.mkdir(pth+"/music")
-        os.mkdir(pth+"/sfx")
+        os.mkdir(pth+"/data/art")
+        for ad in os.listdir("data/art"):
+            os.mkdir(pth+"/data/art/"+ad)
+        os.mkdir(pth+"/data/music")
+        os.mkdir(pth+"/data/sfx")
         os.mkdir(pth+"/movies")
         f = open(pth+"/readme.txt","w")
         f.write("Newly Created Game\nName: Enter games name\nAuthor: Enter your name\nDate: Date it was created/updated\n\nSome info about the game could go here.\nSome more paragraph about game etc.\n\n\nPlace any original art, music, or sound effects that you will use in more than one case in the art,music,sfx folders in this directory.  Each case should also be a unique directory in this folder.")

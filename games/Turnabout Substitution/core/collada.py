@@ -82,4 +82,4 @@ def read(file):
     return meshes
 
 if __name__=="__main__":
-    print read("../art/3d/breifcase.dae")
+    print read("../data/art/3d/breifcase.dae")

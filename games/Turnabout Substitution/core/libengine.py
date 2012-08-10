@@ -1353,7 +1353,7 @@ class screen_settings(gui.pane):
                     ermsg.text = "Sound not initialized"
                 else:
                     assets.music_volume = int(s.text)
-                    assets.play_music("Ding.ogg",loop=0,pre="sfx/")
+                    assets.play_music("Ding.ogg",loop=0,pre="data/sfx/")
                     wini()
         line.children.append(gui.label("MusicVolume:"))
         line.children.append(newr("0","musvol"))
@@ -1607,7 +1607,7 @@ def make_screen():
         pygame.screen = pygame.Surface([sw,sh*assets.num_screens]).convert()
         pygame.blank = pygame.screen.convert()
     pygame.display.set_caption("PyWright "+VERSION)
-    pygame.display.set_icon(pygame.image.load("art/general/bb.png"))
+    pygame.display.set_icon(pygame.image.load("data/art/general/bb.png"))
 
     
 def draw_screen():

@@ -716,7 +716,7 @@
                 * title - the game name, displayed on the game list
                 * icon - path to an image to use as the game's icon, relative to the root
                         of the game folder; include file extension
-                        (i.e., if icon equals "art/general/icon.png" there should be a
+                        (i.e., if icon equals "data/art/general/icon.png" there should be a
                         "games/my_game/art/general/icon.png" present)
                         should be 70x70
                         required for games on update service
@@ -1464,7 +1464,7 @@ PyWright beta 3
 * Added pause command:
 pause 60 - will pause for 60 frames or 1 second
 * added a sound effect command:
-sfx silly.ogg - will play the sound file sfx/silly.ogg
+sfx silly.ogg - will play the sound file data/sfx/silly.ogg
 
 PyWright beta 2
 * Renamed from pyphoenix to pywright.

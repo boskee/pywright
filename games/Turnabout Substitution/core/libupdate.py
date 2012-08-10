@@ -55,13 +55,13 @@ def zipinfo(name):
 from gui import *
 
 def createfiles(dir="port"):
-    for f in os.listdir("art/"+dir):
+    for f in os.listdir("data/art/"+dir):
         if f == ".svn": continue
         if not os.path.isdir(f): continue
         myzip = ZipFile("zip_"+dir+"/"+f+".zip","w",ZIP_DEFLATED)
-        for sub in os.listdir("art/"+dir+"/"+f):
+        for sub in os.listdir("data/art/"+dir+"/"+f):
             if sub == ".svn": continue
-            myzip.write("art/"+dir+"/"+f+"/"+sub,sub)
+            myzip.write("data/art/"+dir+"/"+f+"/"+sub,sub)
         myzip.close()
         print "wrote","zips/"+f+".zip"
         
@@ -71,10 +71,10 @@ def create_path(dir):
         pathfull+=pathpart+"/"
         if not os.path.exists(pathfull):
             os.mkdir(pathfull)
-for required_path in ["art/3d","art/bg","art/ev","art/fg","art/general","art/port","music","games","fonts","sfx"]:
+for required_path in ["data/art/3d","data/art/bg","data/art/ev","data/art/fg","data/art/general","data/art/port","data/music","games","fonts","data/sfx"]:
     create_path(required_path)
 
-def mynames(dir="art/port"):
+def mynames(dir="data/art/port"):
     files = {}
     for file in [x for x in os.listdir(dir) if x != ".svn"]:
         files[file] = getver(dir+"/"+file)
@@ -111,7 +111,7 @@ list.status_box.draw_back = False
 list.status_box.draw(screen)
 root.add_child(list)
 
-def build_list(dir="art/port",url="zip_port_info"):
+def build_list(dir="data/art/port",url="zip_port_info"):
     list.children = [list.status_box,list.scbar]
     fnd = 0
     list.status_box.text="Scanning local files..."
@@ -146,15 +146,15 @@ class Engine:
             root.children[root.start_index].rpos = rpos
         threading.Thread(target=t).start()
     def Download_Characters(self):
-        self.Download_X("port","art/port","ports.php")
+        self.Download_X("port","data/art/port","ports.php")
     def Download_Backgrounds(self):
-        self.Download_X("bg","art/bg","bg.php")
+        self.Download_X("bg","data/art/bg","bg.php")
     def Download_Foreground(self):
-        self.Download_X("fg","art/fg","fg.php")
+        self.Download_X("fg","data/art/fg","fg.php")
     def Download_Games(self):
         self.Download_X("games","games","games2.php")
     def Download_Music(self):
-        self.Download_X("music","music","music2.php")
+        self.Download_X("music","data/music","music2.php")
     def Upload_My_Games(self):
         list.status_box.text="Fetching data from server..."
         def t():
