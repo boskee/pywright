@@ -77,7 +77,7 @@ if bexe:
     data+=["doc.txt","changelog.txt","data.txt"]
     data+=["data/art/ev/","data/art/port/","data/art/fg/","data/art/bg/"]
     data+=["data/art/bg/"+x for x in os.listdir("data/art/bg/") if x.endswith(".png")]
-    data+=["data/art/fg/"+x for x in os.listdir("data/art/fg/") if x.endswith(".png") or x.endswith(".gif") or x.endswith(".txt")]
+    data+=["data/art/fg/"+x for x in os.listdir("data/art/fg/") if x.endswith((".png", ".gif", ".txt"))]
 
 # build the sdist target
 if cmd == 'sdist' and bexe:
