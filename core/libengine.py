@@ -667,7 +667,7 @@ char test
         if not line:
             return
         if line[0] in [u'"',u'\u201C'] and len(line)>1:
-            if not (line.endswith('"') or line.endswith(u'\u201C')):
+            if not (line.endswith(('"', u'\u201C'))):
                 line = line+u'"'
             self.call_func("textbox",["textbox",line[1:-1]])
             return True
